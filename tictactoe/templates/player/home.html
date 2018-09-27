@@ -1,0 +1,31 @@
+{% extends "base.html"  %}
+{% block content %}
+
+<h1 class="text-primary">Welcome {{ user.username }}</h1>
+<div class="primary">
+    <div class=" col-md-6 ">
+        <h3>Active Games</h3>
+            {% include "player/game_list_snippet.html" with games_list=active_games %}
+        <h3>Finished Games</h3>
+            {% include "player/game_list_snippet.html" with games_list=finished_games %}
+        <p>Click Here To Invite Someone</p>
+        <p>
+            <a  class="btn btn-primary" href="{% url 'player_new_invitations' %}">Start A Game</a>
+        </p>
+    </div>
+    <div class="col-md-6">
+        <h3>Invitation</h3>
+        {% if invitations %}
+        <div class="list-group">
+            {% for inv in invitations %}
+                <a href="{% url 'player_accept_invitation' id=inv.id %}" class="list-group-item">{{ inv.from_player.username }} has invited you</a>
+            {% endfor %}
+        </div>
+        {% else %}
+         <p>You have no invitations</p>
+        {% endif %}
+
+
+    </div>
+</div>
+{%  endblock  %}
